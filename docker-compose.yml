@@ -1,0 +1,53 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: global_talent_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    ports:
+      - "5173:5173"
+    networks:
+      - global_talent_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: global_talent_nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - global_talent_network
+
+  db:
+    image: mysql:8.0
+    container_name: global_talent_db
+    restart: unless-stopped
+    ports:
+      - "3305:3306"
+    environment:
+      MYSQL_DATABASE: global_talent
+      MYSQL_USER: tech_nation_user
+      MYSQL_PASSWORD: kazeem123456
+      MYSQL_ROOT_PASSWORD: kazeem123456
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - global_talent_network
+
+networks:
+  global_talent_network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local 
