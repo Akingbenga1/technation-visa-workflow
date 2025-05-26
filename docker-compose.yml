@@ -34,9 +34,9 @@ services:
       - "3305:3306"
     environment:
       MYSQL_DATABASE: global_talent
-      MYSQL_USER: tech_nation_user
-      MYSQL_PASSWORD: kazeem123456
-      MYSQL_ROOT_PASSWORD: kazeem123456
+      MYSQL_USER: 
+      MYSQL_PASSWORD: 
+      MYSQL_ROOT_PASSWORD: 
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
